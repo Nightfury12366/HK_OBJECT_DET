@@ -296,10 +296,10 @@ def train(opt):
                 writer.add_scalars('Regression_loss', {'val': reg_loss}, step)
                 writer.add_scalars('Classfication_loss', {'val': cls_loss}, step)
 
-                if (loss + opt.es_min_delta < best_loss):
+                if loss + opt.es_min_delta < best_loss:
                     best_loss = loss
                     best_epoch = epoch
-                    save_checkpoint(model, f'efficientdet-d{opt.compound_coef}_{epoch}_{step}.pth')  # 保存模型
+                    save_checkpoint(model, f'efficientdet-d{opt.compound_coef}_output.pth')  # 保存模型
 
                 model.train()
 

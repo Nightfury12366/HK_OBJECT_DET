@@ -31,6 +31,8 @@ def get_args():
     parser.add_argument('--data_path', type=str, default='video/4.mp4', help='the root folder of dataset')
     # 默认检测国旗国徽
     parser.add_argument('--is_dibiao', type=bool, default=False, help='检测国旗还是地标')
+    # 是否是模型升级后的模型配置文件
+    parser.add_argument('--is_update', type=bool, default=False, help='是否使用更新之后的模型')
     args = parser.parse_args()
     return args
 
