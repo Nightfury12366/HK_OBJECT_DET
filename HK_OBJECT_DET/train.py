@@ -130,10 +130,10 @@ def train(opt):
             weights_path = opt.load_weights
         else:
             weights_path = get_last_weights(opt.saved_path)
-        try:
-            last_step = int(os.path.basename(weights_path).split('_')[-1].split('.')[0])
-        except:
-            last_step = 0
+        # try:
+        #     last_step = int(os.path.basename(weights_path).split('_')[-1].split('.')[0])
+        # except:
+        last_step = 0
 
         try:
             ret = model.load_state_dict(torch.load(weights_path), strict=False)
@@ -299,7 +299,8 @@ def train(opt):
                 if loss + opt.es_min_delta < best_loss:
                     best_loss = loss
                     best_epoch = epoch
-                    save_checkpoint(model, f'efficientdet-d{opt.compound_coef}_output.pth')  # 保存模型
+                    save_checkpoint(model, f'efficientdet-d{opt.compound_coef}_{epoch}_{step}.pth')
+                    save_checkpoint(model, f'efficientdet-d{opt.compound_coef}_output_0.pth')  # 保存最新模型
 
                 model.train()
 
