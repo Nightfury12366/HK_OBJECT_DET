@@ -28,9 +28,6 @@ import re
 
 def get_args():
     parser = argparse.ArgumentParser('SkyLake HK_Object_detection Video Test')
-    # 输入视频的路径
-    parser.add_argument('--data_path', type=str, default='video/guoqi',
-                        help='the root folder of dataset')  # 默认是国旗视频文件夹
     # 默认检测国旗国徽
     parser.add_argument('--is_dibiao', type=bool, default=False, help='检测国旗还是地标')
     args = parser.parse_args()
@@ -54,9 +51,13 @@ if __name__ == '__main__':
     if opt.is_dibiao is False:  # 判断加载地标模型还是国旗国徽模型
         params = yaml.safe_load(open(f'projects/display_GuoQi.yml'))
         net_path = f'weights/efficientdet-d0_guoqi.pth'
+        out_path = f'performance_test_guoqi.json'
+        data_path = 'video/guoqi'
     else:
         params = yaml.safe_load(open(f'projects/display_DiBiao.yml'))
         net_path = f'weights/efficientdet-d0_dibiao.pth'
+        out_path = f'performance_test_dibiao.json'
+        data_path = 'video/dibiao'
 
     obj_list = params['obj_list']
 
@@ -85,7 +86,7 @@ if __name__ == '__main__':
     clipBoxes = ClipBoxes()
 
     # Video's path
-    video_src = opt.data_path  # set int to use webcam, set str to read from a video file
+    video_src = data_path  # set int to use webcam, set str to read from a video file
     path_list = os.listdir(video_src)
     progress_bar = tqdm(path_list)
     for video in path_list:  # 进度条
@@ -170,6 +171,6 @@ if __name__ == '__main__':
 
     cv2.destroyAllWindows()
 
-    fileObject = open('performance_test_guoqi.json', 'w')
+    fileObject = open(out_path, 'w')
     fileObject.write(data)
     fileObject.close()

@@ -1,5 +1,6 @@
 import json
 import os.path
+import argparse
 
 
 def callAcc(pre, tag):
@@ -49,6 +50,8 @@ def keyFrameAcc(pre_file, tag_file, out_file=None):
                     totol_U += v_U
                     video_map[character] = acc
         result[video_k] = video_map
+
+    result = json.dumps(result, sort_keys=True, indent=4, ensure_ascii=False, separators=(',', ': '))
     print(result)
     print("Average Accuracy: {:.4%}".format(totol_I / totol_U))
     if out_file:
@@ -74,5 +77,22 @@ def IoU2D(a, b):
         return min(a[2], b[2]) - max(a[0], b[0]) + 1
 
 
-keyFrameAcc(tag_file="performance_test_guoqi.json", pre_file="performance_test_guoqi.json", out_file="result.json")
-# print(IoU2D([1,3],[2,4]))
+def get_args():
+    parser = argparse.ArgumentParser('SkyLake HK_Object_detection Video Test')
+    # 默认检测国旗国徽
+    parser.add_argument('--is_dibiao', type=bool, default=False, help='检测国旗还是地标')
+    args = parser.parse_args()
+    return args
+
+opt = get_args()
+if opt.is_dibiao is False:  # 判断加载地标模型还是国旗国徽模型
+    test_json = f"performance_test_guoqi.json"
+    real_json = f"performance_real_guoqi.json"
+    out_json = f"performance_result_guoqi.json"
+else:
+    test_json = f"performance_test_dibiao.json"
+    real_json = f"performance_real_dibiao.json"
+    out_json = f"performance_result_dibiao.json"
+
+keyFrameAcc(tag_file=real_json, pre_file=test_json, out_file=out_json)
+

@@ -18,6 +18,7 @@ from efficientdet.utils import BBoxTransform, ClipBoxes
 from utils.utils import preprocess, invert_affine, postprocess, preprocess_video
 import json
 import yaml
+from tqdm import tqdm
 
 import os
 import sys
@@ -434,7 +435,7 @@ if __name__ == '__main__':
     Object_Dict = {"objects": {}}
 
     count = 0
-
+    progress_bar = tqdm([])
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -460,7 +461,8 @@ if __name__ == '__main__':
                               threshold, iou_threshold)
 
         # 添加带有时间戳的对象
-        print('处理进度：', count, '/', sum_count)
+        # print('处理进度：', count, '/', sum_count)
+        progress_bar.set_description('Video: {}. Progress: {}/{}'.format("处理进度", count, sum_count))
         remove_index = []  # 要在显示中剔除的目标框
         if len(out[0]['class_ids']) > 0:
 
@@ -515,7 +517,11 @@ if __name__ == '__main__':
                     Object_Dict['objects'][key]['time'].remove(a_time_list)
 
     data = json.dumps(Object_Dict, sort_keys=True, indent=4, ensure_ascii=False, separators=(',', ': '))
-    print(data)
+    Object_Dict_Dis = Object_Dict  # 复制一份不含有image的显示版本的字典
+    for key in list(Object_Dict_Dis['objects'].keys()):
+        del Object_Dict_Dis['objects'][key]['image']
+    data_dis = json.dumps(Object_Dict_Dis, sort_keys=True, indent=4, ensure_ascii=False, separators=(',', ': '))
+    print(data_dis)
 
     cap.release()
     cv2.destroyAllWindows()
