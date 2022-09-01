@@ -74,5 +74,5 @@ def IoU2D(a, b):
         return min(a[2], b[2]) - max(a[0], b[0]) + 1
 
 
-keyFrameAcc(tag_file="1.json", pre_file="2.json", out_file="result.json")
+keyFrameAcc(tag_file="performance_test_guoqi.json", pre_file="performance_test_guoqi.json", out_file="result.json")
 # print(IoU2D([1,3],[2,4]))
