@@ -28,11 +28,9 @@ import re
 def get_args():
     parser = argparse.ArgumentParser('SkyLake HK_Object_detection Video Test')
     # 输入视频的路径
-    parser.add_argument('--data_path', type=str, default='video/4.mp4', help='the root folder of dataset')
+    parser.add_argument('--data_path', type=str, default='video/guoqi/guoqi13.mp4', help='the root folder of dataset')
     # 默认检测国旗国徽
     parser.add_argument('--is_dibiao', type=bool, default=False, help='检测国旗还是地标')
-    # 是否是模型升级后的模型配置文件
-    parser.add_argument('--is_update', type=bool, default=False, help='是否使用更新之后的模型')
     args = parser.parse_args()
     return args
 
@@ -166,7 +164,8 @@ def run(filename, savename):
                 i = out[0]['class_ids'][index]
                 # 调整各个目标之间的阈值
                 if (obj_list[int(i)] == 'jzjgc' and out[0]['scores'][index] < 0.9) or (
-                        obj_list[int(i)] == 'xghzzx' and out[0]['scores'][index] < 0.95):
+                        obj_list[int(i)] == 'xghzzx' and out[0]['scores'][index] < 0.95) or (
+                        obj_list[int(i)] == 'lbf' and out[0]['scores'][index] <= 0.915):
                     remove_index.append(index)
                     continue
 
@@ -469,7 +468,7 @@ if __name__ == '__main__':
                 i = out[0]['class_ids'][index]
                 # 调整各个目标之间的阈值
                 if (obj_list[int(i)] == 'jzjgc' and out[0]['scores'][index] < 0.9) or (
-                        obj_list[int(i)] == 'xghzzx' and out[0]['scores'][index] < 0.95)\
+                        obj_list[int(i)] == 'xghzzx' and out[0]['scores'][index] < 0.95) \
                         or (obj_list[int(i)] == 'lbf' and out[0]['scores'][index] <= 0.915):
                     remove_index.append(index)
                     continue
