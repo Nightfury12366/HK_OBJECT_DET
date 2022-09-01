@@ -470,7 +470,7 @@ if __name__ == '__main__':
                 # 调整各个目标之间的阈值
                 if (obj_list[int(i)] == 'jzjgc' and out[0]['scores'][index] < 0.9) or (
                         obj_list[int(i)] == 'xghzzx' and out[0]['scores'][index] < 0.95)\
-                        or (obj_list[int(i)] == 'lbf' and out[0]['scores'][index] <= 0.9):
+                        or (obj_list[int(i)] == 'lbf' and out[0]['scores'][index] <= 0.915):
                     remove_index.append(index)
                     continue
                 # print(obj_list[int(i)], count)
