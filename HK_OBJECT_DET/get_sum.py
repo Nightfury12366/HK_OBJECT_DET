@@ -17,7 +17,6 @@ is_train = args.is_train
 params = yaml.safe_load(open(f'projects/{project_name}.yml'))
 voc_clses = params['obj_list']  # 加载类别列表
 
-
 categories = []
 
 all_result = {}
@@ -106,8 +105,6 @@ if __name__ == '__main__':
         xml_names = txt2list(train_txt)
         json_name = './datasets/HK_project/annotations/instances_train2020.json'
 
-
-
     xmls = []  # 所有XML文件路径名
 
     '''这一步到时候要改'''
@@ -119,3 +116,8 @@ if __name__ == '__main__':
         add_object(xml_file, i_index)
 
     print(all_result)
+    pSum = 0
+    for key, value in all_result.items():
+        pSum += value
+    print(pSum)
+
