@@ -1,0 +1,33 @@
+obj_list:            # 支持检测的目标拼音缩写，目前支持6个国旗国徽
+- zggh
+- zggq
+- xgqq
+- mggq
+- rbgq
+- elsgq
+
+
+
+
+
+
+
+landmark_id:       # 每个拼音缩写对应的物体中文名字，也是一共6个，与obj_list支持检测的物体一一对应
+    mggq: 美国国旗
+    xgqq: 香港区旗
+    zggh: 中国国徽
+    zggq: 中国国旗
+    rbgq: 日本国旗
+    elsgq: 俄罗斯国旗
+
+
+
+landmark_dict:     # 每个拼音缩写对应的物体中文，也是一共6个，与obj_list支持检测的物体一一对应
+    mggq: 美国国旗
+    xgqq: 香港区旗
+    zggh: 中国国徽
+    zggq: 中国国旗
+    rbgq: 日本国旗
+    elsgq: 俄罗斯国旗
+
+
