@@ -5,6 +5,7 @@ import argparse
 
 def callAcc(pre, tag):
     # [a-b]
+    # print(pre,tag)
     sorted(tag, key=lambda x: x[0])  # 根据起始时间排序
     sorted(pre, key=lambda x: x[0])
     ppos = tpos = 0
@@ -27,6 +28,8 @@ def callAcc(pre, tag):
             if a[2] >= b[2]:
                 tpos += 1
                 totU += (b[2] - b[0] + 1)
+    if tpos<len(tag):
+        totU+=(tag[tpos][2]-tag[tpos][0]+1)
     return totI / totU, totI, totU
 
 
@@ -39,11 +42,13 @@ def keyFrameAcc(pre_file, tag_file, out_file=None):
     totol_I = 0
     totol_U = 0
     for video_k, video_v in pre_map.items():
+        # 对于预测集中的每个视频
         video_map = {}
         if video_k in tag_map:  # 寻找对应视频
             tag_video = tag_map[video_k]
             for character in video_v:
                 if character in tag_video:
+                    # print(video_v,tag_video,character)
                     acc, v_I, v_U = callAcc(video_v[character], tag_video[character])
                     # print(video_k,character,acc)
                     totol_I += v_I
