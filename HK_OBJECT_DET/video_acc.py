@@ -56,13 +56,13 @@ def keyFrameAcc(pre_file, tag_file, out_file=None):
                     video_map[character] = acc
         result[video_k] = video_map
 
-    result = json.dumps(result, sort_keys=True, indent=4, ensure_ascii=False, separators=(',', ': '))
-    print(result)
+    result_ = json.dumps(result, sort_keys=True, indent=4, ensure_ascii=False, separators=(',', ': '))
+    print(result_)
     print("Average Accuracy: {:.4%}".format(totol_I / totol_U))
     if out_file:
         try:
             with open(out_file, 'w', encoding='utf-8') as f:
-                json.dump(result, f, indent=4, ensure_ascii=False)
+                json.dump(result, f, sort_keys=True, indent=4, ensure_ascii=False, separators=(',', ': '))
             print("Json file saved: {:s}".format(out_file))
         except:
             print("Fail to write file: {:s} !".format(out_file))
